@@ -23,12 +23,12 @@ function App() {
 
 	const handleAddPassword = () => {
 		if (!validateDateFormat(date)) {
-			setMessage("Zły format daty. Wymagany format to DD.MM.YYYY.");
+			setMessage("Incorrect date format. Required format is DD.MM.YYYY.");
 			return;
 		}
 
 		if (password.length < nameLength) {
-			setMessage(`Hasło musi zawierać co najmniej ${nameLength} znaków.`);
+			setMessage(`Password must be at least ${nameLength} characters long.`);
 			return;
 		}
 
@@ -45,18 +45,18 @@ function App() {
 			validChars.length < Math.ceil(nameCharacters.size / 2)
 		) {
 			setMessage(
-				"Hasło musi zawierać przynajmniej jedną cyfrę i połowę różnych liter z imienia i nazwiska."
+				"Password must contain at least one digit and half of the different letters from the full name."
 			);
 			return;
 		}
 
 		if (passwords.find((p) => p.password === password)) {
-			setMessage("Hasło już było zapisane");
+			setMessage("This password has already been saved.");
 			return;
 		}
 
 		setPasswords([...passwords, { password, date }]);
-		setMessage("Hasło dodane");
+		setMessage("Password added successfully.");
 	};
 
 	const handleCheckPasswords = () => {
@@ -71,21 +71,21 @@ function App() {
 		});
 
 		if (index !== -1) {
-			setMessage(`Hasło zgodne z hasłem numer: ${index + 1}`);
+			setMessage(`Password matches with record number: ${index + 1}`);
 		} else {
-			setMessage("Nieprawidłowe hasło lub data");
+			setMessage("Invalid password or date.");
 		}
 	};
 
 	return (
 		<div className='container'>
-			<h1>Walidacja danych – Filip Świątek - 3F</h1>
+			<h1>Data Validation – Filip Świątek - 3F</h1>
 			<table>
 				<thead>
 					<tr>
-						<th>lp.</th>
-						<th>Hasło</th>
-						<th>Data ważności</th>
+						<th>No.</th>
+						<th>Password</th>
+						<th>Expiration Date</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -98,10 +98,9 @@ function App() {
 					))}
 				</tbody>
 			</table>
-			<h1>FilipŚwiątek3F</h1>
 			<div>
 				<label>
-					Data ważności (format dd.mm.yyyy):{" "}
+					Expiration date (format dd.mm.yyyy):{" "}
 					<input
 						type='text'
 						value={date}
@@ -110,9 +109,9 @@ function App() {
 				</label>
 				<br />
 				<label>
-					Hasło (musi zawierać co najmniej {nameLength} znaków, w tym
-					przynajmniej {Math.ceil(calculateNameLength("FilipŚwiątek") / 2)}{" "}
-					różnych liter z imienia i nazwiska oraz cyfrę):{" "}
+					Password (must contain at least {nameLength} characters, including at
+					least {Math.ceil(calculateNameLength("Filip Świątek") / 2)} different
+					letters from the full name and a digit):{" "}
 				</label>
 				<input
 					type='text'
@@ -121,9 +120,9 @@ function App() {
 				/>
 			</div>
 			<div>
-				<button onClick={handleAddPassword}>Dodaj nowe hasło</button>
+				<button onClick={handleAddPassword}>Add new password</button>
 				<button onClick={handleCheckPasswords}>
-					Sprawdź poprawność zapisania hasła
+					Verify password correctness
 				</button>
 			</div>
 			<p id='message'>{message}</p>
